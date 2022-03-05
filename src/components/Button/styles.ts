@@ -1,12 +1,18 @@
 import { RectButton } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 
-export const Container = styled(RectButton)`
-  background: ${({ theme }) => theme.colors.primary};
+export interface BtnProps {
+  bgColor: string;
+  size?: string;
+  radius?: string;
+}
+
+export const Container = styled(RectButton)<BtnProps>`
+  background: ${({ bgColor }) => bgColor};
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
+  width: ${({ size }) => size ?? "56px"};
+  height: ${({ size }) => size ?? "56px"};
+  border-radius: ${({ radius }) => radius ?? "16px"};
 `;

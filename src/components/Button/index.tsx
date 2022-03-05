@@ -1,11 +1,14 @@
-import React from 'react';
-import { Container } from "./styles";
-import Arrow from '../../assets/arrow.svg';
+import React, { ReactNode } from 'react';
+import { BtnProps, Container } from "./styles";
 
-export function Button() {
+interface Props extends BtnProps {
+  children: ReactNode;
+}
+
+export function Button({ children, ...rest }: Props) {
   return (
-    <Container>
-      <Arrow />
+    <Container {...rest}>
+      {children}
     </Container>
   )
 }

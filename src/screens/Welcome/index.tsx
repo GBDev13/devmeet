@@ -9,6 +9,7 @@ import {
   Text,
   TextHighlight
 } from "./styles";
+import Arrow from '../../assets/arrow.svg';
 
 export function Welcome() {
   const { colors } = useTheme();
@@ -20,7 +21,9 @@ export function Welcome() {
         <Text>Encontre o seu <TextHighlight>próximo</TextHighlight> evento de programação!</Text>
       </TextContainer>
       <Person />
-      <Button />
+      <Button bgColor={colors.primary}>
+        <Arrow />
+      </Button>
     </Container>
   )
 }

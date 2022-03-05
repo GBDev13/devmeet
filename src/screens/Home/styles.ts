@@ -42,6 +42,7 @@ export const Text = styled.Text`
 export const NoMoreText = styled.Text`
   color: #fff;
   opacity: 0.5;
+  margin-top: 30px;
   ${({ theme }) => css`
     font-size: ${RFValue(12)}px;
     font-family: ${theme.fonts.primary.regular};
