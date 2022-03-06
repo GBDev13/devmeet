@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, ButtonsContainer, Container, LinkText } from './styles';
 import { useTheme } from 'styled-components/native';
 import { rgba } from 'polished';
+import * as Clipboard from 'expo-clipboard';
+import { useToast } from "react-native-toast-notifications";
 
 import NotifyIcon from '../../assets/notify.svg';
 import NotifyOff from '../../assets/cancelNotify.svg';
@@ -10,11 +12,13 @@ import ArrowSuccess from '../../assets/Arrow-Success.svg';
 import ArrowWhite from '../../assets/Arrow-White.svg';
 
 interface Props {
+  link: string;
   isTimeUp: boolean;
 }
 
-export function EventLink({ isTimeUp }: Props) {
+export function EventLink({ link, isTimeUp }: Props) {
   const { colors } = useTheme();
+  const toast = useToast();
 
   const [hasNotify, setHasNotify] = useState(false);
 
@@ -22,9 +26,17 @@ export function EventLink({ isTimeUp }: Props) {
     setHasNotify(old => !old);
   }
 
+  function handleSetLink() {
+    Clipboard.setString(link)
+    toast.show("Link copiado para sua área de transferência!", {
+      type: "success",
+      duration: 4000,
+    });
+  }
+
   return (
     <Container>
-      <LinkText>meet.google/12345</LinkText>
+      <LinkText>{link}</LinkText>
 
       <ButtonsContainer>
         <Button
@@ -36,6 +48,7 @@ export function EventLink({ isTimeUp }: Props) {
           {hasNotify ? <NotifyOff /> : <NotifyIcon />}
         </Button>
         <Button
+          onPress={handleSetLink}
           bgColor={isTimeUp ? colors.success : rgba(colors.success, 0.2)}
           size="24px"
           radius="6px"

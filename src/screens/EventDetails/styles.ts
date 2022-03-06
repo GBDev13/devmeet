@@ -19,6 +19,8 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
+  width: 100%;
+  text-align: left;
   ${({ theme }) => css`
     font-family: ${theme.fonts.primary.bold};
     color: ${theme.colors.white};
@@ -42,6 +44,7 @@ export const Text = styled.Text`
 
 export const DateText = styled.Text<TextProps>`
   margin: 3px 0;
+  text-transform: uppercase;
   ${({ theme, isBold }) => css`
     color: ${theme.colors.primary};
     font-size: ${RFValue(24)}px;
@@ -70,4 +73,6 @@ export const Organizer = styled.Text<TextProps>`
 
 export const EventTitle = styled(Title)`
   font-size: ${RFValue(20)}px;
+  text-align: center;
+  margin-bottom: 20px;
 `;

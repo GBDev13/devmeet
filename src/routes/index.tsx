@@ -7,32 +7,42 @@ import { Home } from '../screens/Home';
 import { EventTypes } from '../screens/EventTypes';
 import { EventDetails } from '../screens/EventDetails';
 const { Navigator, Screen } = createStackNavigator();
+import { ToastProvider } from 'react-native-toast-notifications'
+import { useTheme } from 'styled-components/native';
 
 export function Routes() {
+  const { colors, fonts } = useTheme();
+
   return (
-    <NavigationContainer>
-      <Navigator screenOptions={{ headerShown: false }}>
-        <Screen
-          name="Splash"
-          component={Splash}
-        />
-        <Screen
-          name="Welcome"
-          component={Welcome}
-        />
-        <Screen
-          name="EventTypes"
-          component={EventTypes}
-        />
-        <Screen
-          name="Home"
-          component={Home}
-        />
-        <Screen
-          name="EventDetails"
-          component={EventDetails}
-        />
-      </Navigator>
-    </NavigationContainer>
+    <ToastProvider
+      successColor={colors.success}
+      dangerColor={colors.error}
+      textStyle={{ fontFamily: fonts.primary.medium }}
+    >
+      <NavigationContainer>
+        <Navigator screenOptions={{ headerShown: false }} initialRouteName="EventTypes">
+          <Screen
+            name="Splash"
+            component={Splash}
+          />
+          <Screen
+            name="Welcome"
+            component={Welcome}
+          />
+          <Screen
+            name="EventTypes"
+            component={EventTypes}
+          />
+          <Screen
+            name="Home"
+            component={Home}
+          />
+          <Screen
+            name="EventDetails"
+            component={EventDetails}
+          />
+        </Navigator>
+      </NavigationContainer>
+    </ToastProvider>
   )
 }

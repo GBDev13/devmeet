@@ -18,7 +18,7 @@ export const Container = styled(RectButton)<ContainerProps>`
   background: ${({ theme }) => theme.colors.white};
   padding: 15px;
   border-radius: 9px;
-  height: 163px;
+  min-height: 155px;
   width: 48%;
   justify-content: space-between;
   margin-top: 15px;
@@ -38,9 +38,10 @@ export const Container = styled(RectButton)<ContainerProps>`
 `;
 
 export const Title = styled.Text<BaseSelectedProps>`
-  font-size: ${RFValue(13)}px;
+  font-size: ${RFValue(12)}px;
   line-height: ${RFValue(18)}px;
   margin-top: 30px;
+  margin-bottom: 5px;
   ${({ theme }) => css`
     color: ${theme.colors.background};
     font-family: ${theme.fonts.primary.medium};
@@ -54,7 +55,7 @@ export const Title = styled.Text<BaseSelectedProps>`
 `;
 
 export const Text = styled.Text<TextProps>`
-  font-size: ${RFValue(10)}px;
+  font-size: ${RFValue(9)}px;
   ${({ theme, color }) => css`
     color: ${color ?? theme.colors.textVeryLight};
     font-family: ${theme.fonts.primary.medium};

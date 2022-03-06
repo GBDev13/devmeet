@@ -4,10 +4,24 @@ import { RectButtonProps } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
 import { Container, Text, Title } from './styles';
 
+import ProgrammingIcon from '../../assets/Programing-Terminal.svg';
+import ProgrammingIconWhite from '../../assets/Programing-Terminal-White.svg';
+
+import LaptopIcon from '../../assets/laptop-programming-code.svg';
+import LaptopIconWhite from '../../assets/laptop-programming-code-White.svg';
+
+import GitIcon from '../../assets/hierarchy.svg';
+import GitIconWhite from '../../assets/hierarchy-White.svg';
+
+import IphoneIcon from '../../assets/iPhone-X-Orange.svg';
+import IphoneIconWhite from '../../assets/iPhone-X-White.svg';
+
+type IconTypes = "PROGRAMING" | "LAPTOP" | "INTEGRATION" | "MOBILE" | "BLOCKS_CODE_CHECKMARK" | "TERMINAL" | "BEZIER_CURVE";
+
 export interface IEventType {
   id: number;
-  icons: ReactNode[];
-  title: string;
+  icon: IconTypes;
+  text: string;
   count: number;
 }
 
@@ -16,22 +30,35 @@ type Props = RectButtonProps & {
   selectedType: IEventType | null;
 }
 
+const icons = {
+  "PROGRAMING": [<ProgrammingIcon />, <ProgrammingIconWhite />],
+  "LAPTOP": [<LaptopIcon />, <LaptopIconWhite />],
+  "INTEGRATION": [<GitIcon />, <GitIconWhite />],
+  "MOBILE": [<IphoneIcon />, <IphoneIconWhite />],
+
+  "BLOCKS_CODE_CHECKMARK": [<IphoneIcon />, <IphoneIconWhite />],
+  "TERMINAL": [<IphoneIcon />, <IphoneIconWhite />],
+  "BEZIER_CURVE": [<IphoneIcon />, <IphoneIconWhite />],
+};
+
 export function EventTypeButton({ eventType, selectedType, ...rest }: Props) {
   const { colors } = useTheme();
 
-  const { id, icons, title, count } = eventType;
+  const { id, icon, text, count } = eventType;
 
   const hasSelected = selectedType !== null;
   const isSelected = selectedType?.id === id;
 
+  const currentIcon = icons[icon];
+
   return (
     <Container hasSelected={hasSelected} isSelected={isSelected} {...rest}>
       <View>
-        {isSelected ? icons[1] : icons[0]}
-        <Title isSelected={isSelected}>{title}</Title>
+        {isSelected ? currentIcon[1] : currentIcon[0]}
+        <Title isSelected={isSelected}>{text}</Title>
       </View>
       <Text isSelected={isSelected}>
-        <Text isSelected={isSelected} color={colors.primary}>{count} eventos</Text> encontrados
+        <Text isSelected={isSelected} color={colors.primary}>{count} {count <= 1 ? 'evento' : 'eventos'}</Text> encontrados
       </Text>
     </Container>
   )

@@ -1,54 +1,29 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { EventTypeButton, IEventType } from '../../components/EventTypeButton';
 import { Title } from '../Home/styles';
 import { ButtonsContainer, Container, NextContainer, NextText, Text } from './styles';
-
-import ProgrammingIcon from '../../assets/Programing-Terminal.svg';
-import ProgrammingIconWhite from '../../assets/Programing-Terminal-White.svg';
-
-import LaptopIcon from '../../assets/laptop-programming-code.svg';
-import LaptopIconWhite from '../../assets/laptop-programming-code-White.svg';
-
-import GitIcon from '../../assets/hierarchy.svg';
-import GitIconWhite from '../../assets/hierarchy-White.svg';
-
-import IphoneIcon from '../../assets/iPhone-X-Orange.svg';
-import IphoneIconWhite from '../../assets/iPhone-X-White.svg';
 import { Button } from '../../components/Button';
 import Arrow from '../../assets/arrow.svg';
 import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import { api } from '../../services/api';
+import { useToast } from "react-native-toast-notifications";
+import SkeletonContent from 'react-native-skeleton-content';
+import { lighten } from 'polished';
 
-const eventTypes: IEventType[] = [
-  {
-    id: 1,
-    icons: [<ProgrammingIcon />, <ProgrammingIconWhite />],
-    title: "Servidores Linux",
-    count: 5
-  },
-  {
-    id: 2,
-    icons: [<LaptopIcon />, <LaptopIconWhite />],
-    title: "Desenvolvimento Front-end",
-    count: 2
-  },
-  {
-    id: 3,
-    icons: [<GitIcon />, <GitIconWhite />],
-    title: "Git e DevOps",
-    count: 4
-  },
-  {
-    id: 4,
-    icons: [<IphoneIcon />, <IphoneIconWhite />],
-    title: "Construindo Interfaces",
-    count: 2
-  }
-];
+interface NavigationProps{
+  navigate:(
+    screen: string,
+    event?:{
+      typeId: number
+    }
+  ) => void
+}
 
 export function EventTypes() {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
+  const toast = useToast();
+  const navigation = useNavigation<NavigationProps>();
   const [selectedType, setSelectedType] = useState<IEventType | null>(null);
 
   function handleSelectType(type: IEventType) {
@@ -57,7 +32,30 @@ export function EventTypes() {
       return;
     }
     setSelectedType(type);
+  };
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [types, setTypes] = useState<IEventType[]>([]);
+
+  async function getEventTypes() {
+    try {
+      setIsLoading(true);
+      const { data } = await api.get("/tipo");
+      
+      setTypes(data);
+    } catch (err) {
+      toast.show("Ocorreu um erro ao buscar os tipos de eventos, tente novamente mais tarde!", {
+        type: "danger",
+        duration: 5000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
+
+  useLayoutEffect(() => {
+    getEventTypes();
+  }, []);
 
   return (
     <Container>
@@ -65,31 +63,56 @@ export function EventTypes() {
         Que tipo de evento você procura?
       </Title>
       <Text>Selecione a categoria que mais te agrada!</Text>
-      
-      <ButtonsContainer>
-        {eventTypes.map(type => (
-          <EventTypeButton
-            key={type.id}
-            onPress={() => handleSelectType(type)}
-            eventType={type}
-            selectedType={selectedType}
-          />
-        ))}
-      </ButtonsContainer>
 
-      {selectedType !== null && (
-        <NextContainer>
-            <NextText>Próximo</NextText>
-            <Button
-              onPress={() => navigation.navigate("Home")}
-              bgColor={colors.success}
-              size="40px"
-              radius="11px"
-            >
-              <Arrow width={20} />
-            </Button>
-        </NextContainer>
+      {isLoading ? (
+        <SkeletonContent
+          containerStyle={{
+            flex: 1,
+            width: '100%',
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}
+          isLoading={isLoading}
+          layout={[
+            { width: '48%', height: 160, borderRadius: 9, marginVertical: 8 },
+            { width: '48%', height: 160, borderRadius: 9, marginVertical: 8 },
+            { width: '48%', height: 160, borderRadius: 9, marginVertical: 8 },
+            { width: '48%', height: 160, borderRadius: 9, marginVertical: 8 },
+            { width: '48%', height: 160, borderRadius: 9, marginVertical: 8 },
+            { width: '48%', height: 160, borderRadius: 9, marginVertical: 8 }
+          ]}
+          boneColor={lighten(0.2, colors.shape)}
+          highlightColor={lighten(0.4, colors.shape)}
+        />
+      ) : (
+        <ButtonsContainer>
+          {!isLoading && types.map(type => (
+            <EventTypeButton
+              key={type.id}
+              onPress={() => handleSelectType(type)}
+              eventType={type}
+              selectedType={selectedType}
+            />
+          ))}
+        </ButtonsContainer>
       )}
+
+      <NextContainer>
+          {selectedType !== null && (
+            <>
+              <NextText>Próximo</NextText>
+              <Button
+                onPress={() => navigation.navigate("Home", { typeId: selectedType?.id })}
+                bgColor={colors.success}
+                size="40px"
+                radius="11px"
+              >
+                <Arrow width={20} />
+              </Button>
+            </>
+          )}
+      </NextContainer>
     </Container>
   )
 }

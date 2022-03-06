@@ -16,13 +16,22 @@ export const Container = styled(RectButton)`
   background: ${({ theme }) => theme.colors.white};
   padding: 16px;
   border-radius: 9px;
+  margin: 16px 0;
+`;
+
+export const DateContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
 `;
 
 export const DateText = styled.Text<DateTextProps>`
   font-size: ${RFValue(16)}px;
+  text-transform: uppercase;
   ${({ theme, fontWeight, color }) => css`
     color: ${color ?? theme.colors.primary};
-    font-family: ${theme.fonts.secondary.bold};
+    font-family: ${fontWeight === "light"
+      ? theme.fonts.secondary.medium
+      : theme.fonts.secondary.bold};
   `}
 `;
 

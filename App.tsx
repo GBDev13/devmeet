@@ -4,7 +4,6 @@ import 'intl/locale-data/jsonp/pt-BR';
 import React from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import theme from './src/global/styles/theme';
-
 import { Routes } from './src/routes';
 
 import { 

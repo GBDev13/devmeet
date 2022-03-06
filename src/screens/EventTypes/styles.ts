@@ -24,17 +24,24 @@ export const Text = styled.Text`
   `}
 `;
 
-export const ButtonsContainer = styled.View`
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
+export const ButtonsContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: 80,
+  },
+})`
+  flex: 1;
 `;
 
 export const NextContainer = styled.View`
   flex-direction: row;
   align-items: center;
   align-self: flex-end;
-  margin-top: 36px;
+  margin-top: 32px;
+  height: 40px;
 `;
 
 export const NextText = styled.Text`
