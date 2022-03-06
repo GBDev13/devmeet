@@ -1,11 +1,21 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { BackButton } from '../../components/BackButton';
-import { EventCard } from '../../components/EventCard';
+import { EventCard, IEvent } from '../../components/EventCard';
 import { Container, Header, NoMoreText, Text, Title } from "./styles";
 
-export function Home() {
+interface NavigationProps{
+  navigate:(
+    screen: string,
+    event?:{
+      car: IEvent
+    }
+  ) => void
+}
 
-  
+export function Home() {
+  const navigation = useNavigation<NavigationProps>();
+
   return (
     <Container>
       <Header>
@@ -18,7 +28,9 @@ export function Home() {
 
       <Text>Selecione o evento desejado.{'\n'}E espere sua data!</Text>
 
-      <EventCard />
+      <EventCard
+        onPress={() => navigation.navigate("EventDetails")}
+      />
       <NoMoreText>Sem mais eventos...</NoMoreText>
       
     </Container>

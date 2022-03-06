@@ -17,6 +17,7 @@ import IphoneIconWhite from '../../assets/iPhone-X-White.svg';
 import { Button } from '../../components/Button';
 import Arrow from '../../assets/arrow.svg';
 import { useTheme } from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 
 const eventTypes: IEventType[] = [
   {
@@ -47,6 +48,7 @@ const eventTypes: IEventType[] = [
 
 export function EventTypes() {
   const { colors } = useTheme();
+  const navigation = useNavigation<any>();
   const [selectedType, setSelectedType] = useState<IEventType | null>(null);
 
   function handleSelectType(type: IEventType) {
@@ -78,7 +80,12 @@ export function EventTypes() {
       {selectedType !== null && (
         <NextContainer>
             <NextText>Próximo</NextText>
-            <Button bgColor={colors.success} size="40px" radius="11px">
+            <Button
+              onPress={() => navigation.navigate("Home")}
+              bgColor={colors.success}
+              size="40px"
+              radius="11px"
+            >
               <Arrow width={20} />
             </Button>
         </NextContainer>

@@ -12,22 +12,22 @@ export function Routes() {
   return (
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
-        {/* <Screen
+        <Screen
           name="Splash"
           component={Splash}
-        /> */}
-        {/* <Screen
+        />
+        <Screen
           name="Welcome"
           component={Welcome}
-        /> */}
-        {/* <Screen
+        />
+        <Screen
           name="EventTypes"
           component={EventTypes}
-        /> */}
-        {/* <Screen
+        />
+        <Screen
           name="Home"
           component={Home}
-        /> */}
+        />
         <Screen
           name="EventDetails"
           component={EventDetails}

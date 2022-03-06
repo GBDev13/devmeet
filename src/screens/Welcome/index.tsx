@@ -10,9 +10,15 @@ import {
   TextHighlight
 } from "./styles";
 import Arrow from '../../assets/arrow.svg';
+import { useNavigation } from '@react-navigation/native';
 
 export function Welcome() {
   const { colors } = useTheme();
+  const navigation = useNavigation<any>();
+
+  function handleNext() {
+    navigation.navigate("EventTypes");
+  }
 
   return (
     <Container>
@@ -21,7 +27,7 @@ export function Welcome() {
         <Text>Encontre o seu <TextHighlight>próximo</TextHighlight> evento de programação!</Text>
       </TextContainer>
       <Person />
-      <Button bgColor={colors.primary}>
+      <Button onPress={handleNext} bgColor={colors.primary}>
         <Arrow />
       </Button>
     </Container>
