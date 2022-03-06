@@ -1,10 +1,9 @@
-import 'intl';
-import 'intl/locale-data/jsonp/pt-BR';
-
 import React from 'react';
 import { ThemeProvider } from 'styled-components/native';
 import theme from './src/global/styles/theme';
 import { Routes } from './src/routes';
+
+import * as Notifications from 'expo-notifications';
 
 import { 
   useFonts,
@@ -23,6 +22,14 @@ import {
 
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'react-native';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function App() {
   const [fontsLoaded] = useFonts({

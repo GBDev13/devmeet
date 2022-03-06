@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Button, ButtonsContainer, Container, LinkText } from './styles';
 import { useTheme } from 'styled-components/native';
 import { rgba } from 'polished';
 import * as Clipboard from 'expo-clipboard';
+import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useToast } from "react-native-toast-notifications";
 
 import NotifyIcon from '../../assets/notify.svg';
@@ -10,24 +12,101 @@ import NotifyOff from '../../assets/cancelNotify.svg';
 
 import ArrowSuccess from '../../assets/Arrow-Success.svg';
 import ArrowWhite from '../../assets/Arrow-White.svg';
+import { IEvent } from '../EventCard';
+import { isBefore } from 'date-fns';
 
 interface Props {
-  link: string;
+  event: IEvent;
   isTimeUp: boolean;
 }
 
-export function EventLink({ link, isTimeUp }: Props) {
+const fakeData = new Date('2022-03-06T08:53:16.020Z');
+
+export function EventLink({ event, isTimeUp }: Props) {
   const { colors } = useTheme();
   const toast = useToast();
 
   const [hasNotify, setHasNotify] = useState(false);
+  const [notify, setNotify] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  function handleNotify() {
-    setHasNotify(old => !old);
+  async function getNotifyId() {
+    try {
+      setIsLoading(true);
+      const jsonData = await AsyncStorage.getItem(`notify${event.id}`);
+      const parsed = jsonData ? JSON.parse(jsonData) : {};
+      const notifyId = parsed?.notifyId;
+
+      setNotify(notifyId ?? '');
+      if(!!notifyId) {
+        setHasNotify(true);
+        const before = isBefore(new Date(parsed.dataInicio), new Date());
+        if (before) {
+         await AsyncStorage.removeItem(`notify${event.id}`);
+         setHasNotify(false);
+        }
+
+      } else {
+        setHasNotify(false);
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useLayoutEffect(() => {
+    getNotifyId();
+  }, [])
+
+  async function handleNotify() {
+    if(isLoading) return;
+    try {
+      setIsLoading(true);
+      if(!notify) {
+        const notifyId = await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Dev Meet iniciando 🚀',
+            body: `O evento '${event.titulo}' está prestes a iniciar!`,
+            data: { event },
+          },
+          trigger: {
+            date: new Date(event.dataInicio)
+            // date: fakeData
+          },
+        });
+        
+        const data = {
+          notifyId,
+          ...event
+        };
+
+        await AsyncStorage.setItem(`notify${event.id}`, JSON.stringify(data));
+        setNotify(notifyId);
+
+        toast.show("Você será notificado(a) quando o evento iniciar!", {
+          type: "success",
+          duration: 4000,
+        });
+      } else {
+        await Notifications.cancelScheduledNotificationAsync(notify);
+        await AsyncStorage.removeItem(`notify${event.id}`);
+        toast.show("A notificação para esse evento foi removida!", {
+          type: "success",
+          duration: 4000,
+        });
+      }
+      setHasNotify(old => !old);
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function handleSetLink() {
-    Clipboard.setString(link)
+    Clipboard.setString(event.link)
     toast.show("Link copiado para sua área de transferência!", {
       type: "success",
       duration: 4000,
@@ -36,7 +115,7 @@ export function EventLink({ link, isTimeUp }: Props) {
 
   return (
     <Container>
-      <LinkText>{link}</LinkText>
+      <LinkText>{event.link}</LinkText>
 
       <ButtonsContainer>
         <Button

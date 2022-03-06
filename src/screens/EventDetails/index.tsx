@@ -60,7 +60,7 @@ export function EventDetails() {
 
       <EventTitle>Link do Evento</EventTitle>
 
-      <EventLink link={event.link} isTimeUp={timerData.isTimeUp} />
+      <EventLink event={event} isTimeUp={timerData.isTimeUp} />
 
       <EventCountdown timerData={timerData} />
     </Container>
