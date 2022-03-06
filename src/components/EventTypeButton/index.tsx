@@ -16,6 +16,15 @@ import GitIconWhite from '../../assets/hierarchy-White.svg';
 import IphoneIcon from '../../assets/iPhone-X-Orange.svg';
 import IphoneIconWhite from '../../assets/iPhone-X-White.svg';
 
+import AgileIcon from '../../assets/agile.svg';
+import AgileIconWhite from '../../assets/agile-White.svg';
+
+import Terminal from '../../assets/terminal.svg';
+import TerminalWhite from '../../assets/terminal-White.svg';
+
+import Bezier from '../../assets/bezier.svg';
+import BezierWhite from '../../assets/bezier-White.svg';
+
 type IconTypes = "PROGRAMING" | "LAPTOP" | "INTEGRATION" | "MOBILE" | "BLOCKS_CODE_CHECKMARK" | "TERMINAL" | "BEZIER_CURVE";
 
 export interface IEventType {
@@ -35,10 +44,9 @@ const icons = {
   "LAPTOP": [<LaptopIcon />, <LaptopIconWhite />],
   "INTEGRATION": [<GitIcon />, <GitIconWhite />],
   "MOBILE": [<IphoneIcon />, <IphoneIconWhite />],
-
-  "BLOCKS_CODE_CHECKMARK": [<IphoneIcon />, <IphoneIconWhite />],
-  "TERMINAL": [<IphoneIcon />, <IphoneIconWhite />],
-  "BEZIER_CURVE": [<IphoneIcon />, <IphoneIconWhite />],
+  "BLOCKS_CODE_CHECKMARK": [<AgileIcon />, <AgileIconWhite />],
+  "TERMINAL": [<Terminal />, <TerminalWhite />],
+  "BEZIER_CURVE": [<Bezier />, <BezierWhite />]
 };
 
 export function EventTypeButton({ eventType, selectedType, ...rest }: Props) {
