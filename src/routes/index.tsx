@@ -5,6 +5,7 @@ import { Splash } from '../screens/Splash';
 import { Welcome } from '../screens/Welcome';
 import { Home } from '../screens/Home';
 import { EventTypes } from '../screens/EventTypes';
+import { EventDetails } from '../screens/EventDetails';
 const { Navigator, Screen } = createStackNavigator();
 
 export function Routes() {
@@ -23,9 +24,13 @@ export function Routes() {
           name="EventTypes"
           component={EventTypes}
         /> */}
-        <Screen
+        {/* <Screen
           name="Home"
           component={Home}
+        /> */}
+        <Screen
+          name="EventDetails"
+          component={EventDetails}
         />
       </Navigator>
     </NavigationContainer>

@@ -8,7 +8,7 @@ export function BackButton() {
 
   return (
     <Container>
-      <AntDesign name="arrowleft" size={24} color={colors.textLight} />
+      <AntDesign name="arrowleft" size={20} color={colors.textLight} />
       <ButtonText>
         Voltar
       </ButtonText>

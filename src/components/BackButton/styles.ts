@@ -5,6 +5,7 @@ import styled, { css } from "styled-components/native";
 export const Container = styled(RectButton)`
   align-items: center;
   flex-direction: row;
+  height: 30px;
 `;
 
 export const ButtonText = styled.Text`

@@ -3,6 +3,7 @@ export default {
     primary: "#FF5100",
     background: "#282828",
     shape: "#323232",
+    shapeDark: "#3C3C3C",
     textVeryLight: "#BFBFBF",
     textLight: "#C6C6C6",
     text: "#959595",
@@ -21,6 +22,7 @@ export default {
     },
     secondary: {
       bold: "Rajdhani_700Bold",
+      semiBold: "Rajdhani_600SemiBold",
       medium: "Rajdhani_500Medium",
     },
   },

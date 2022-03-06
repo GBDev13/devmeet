@@ -18,6 +18,7 @@ import {
 
 import {
   Rajdhani_700Bold,
+  Rajdhani_600SemiBold,
   Rajdhani_500Medium
 } from '@expo-google-fonts/rajdhani';
 
@@ -32,6 +33,7 @@ export default function App() {
     Epilogue_500Medium,
     Epilogue_600SemiBold,
     Rajdhani_700Bold,
+    Rajdhani_600SemiBold,
     Rajdhani_500Medium
   });
 
