@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
-import { Container, Text, Title } from './styles';
+import { MotiContainer, Container, Text, Title } from './styles';
 
 import ProgrammingIcon from '../../assets/Programing-Terminal.svg';
 import ProgrammingIconWhite from '../../assets/Programing-Terminal-White.svg';
@@ -60,14 +60,28 @@ export function EventTypeButton({ eventType, selectedType, ...rest }: Props) {
   const currentIcon = icons[icon];
 
   return (
-    <Container hasSelected={hasSelected} isSelected={isSelected} {...rest}>
-      <View>
-        {isSelected ? currentIcon[1] : currentIcon[0]}
-        <Title isSelected={isSelected}>{text}</Title>
-      </View>
-      <Text isSelected={isSelected}>
-        <Text isSelected={isSelected} color={colors.primary}>{count} {count <= 1 ? 'evento' : 'eventos'}</Text> encontrados
-      </Text>
+     <Container hasSelected={hasSelected} isSelected={isSelected} {...rest}>
+      <MotiContainer
+        from={{
+          opacity: 0,
+          scale: 0.8
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1
+        }}
+        transition={{
+          type: 'spring'
+        }}
+      >
+        <View>
+          {isSelected ? currentIcon[1] : currentIcon[0]}
+          <Title isSelected={isSelected}>{text}</Title>
+        </View>
+        <Text isSelected={isSelected}>
+          <Text isSelected={isSelected} color={colors.primary}>{count} {count <= 1 ? 'evento' : 'eventos'}</Text> encontrados
+        </Text>
+      </MotiContainer>
     </Container>
   )
 }

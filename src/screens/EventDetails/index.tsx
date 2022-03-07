@@ -1,4 +1,5 @@
 import { useRoute } from '@react-navigation/native';
+import { MotiView } from 'moti';
 import React from 'react';
 import { View } from 'react-native';
 import { BackButton } from '../../components/BackButton';
@@ -14,16 +15,21 @@ interface Params {
 }
 
 export function EventDetails() {
-  const finalDate = new Date("2022-03-08T00:50:40.037Z");
-  const startDate = new Date("2022-03-02T00:00:00.000Z");
-
-  const timerData = useTicker({ startDate, finalDate });
 
   const route = useRoute();
   const { event } = route.params as Params;
+  // const finalDate = new Date("2022-03-07T04:09:22.000Z"); // quando o evento começa
+  // const startDate = new Date("2022-03-02T23:00:00.000Z"); // data de publicaçao
 
-  const formattedDate = formatDate(new Date(event.dataPublicacao), 'dd/MMM');
-  const formattedHour = formatDate(new Date(event.dataPublicacao), 'HH:mm');
+  const timerData = useTicker({
+    startDate: new Date(event.dataPublicacao),
+    finalDate: new Date(event.dataInicio)
+    // startDate,
+    // finalDate
+  });
+
+  const formattedDate = formatDate(new Date(event.dataInicio), 'dd/MMM');
+  const formattedHour = formatDate(new Date(event.dataInicio), 'HH:mm');
 
   return (
     <Container
@@ -35,7 +41,19 @@ export function EventDetails() {
         paddingVertical: 62,
       }}
     >
-      <Header>
+      <Header
+        from={{
+          opacity: 0,
+          translateY: -80
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        transition={{
+          type: 'spring',
+        }}
+      >
         <View>
           <DateText isBold>
             {formattedDate}
@@ -48,19 +66,72 @@ export function EventDetails() {
         <BackButton />
       </Header>
 
-      <Title>
+      <Title
+        from={{
+          opacity: 0,
+          translateX: -80
+        }}
+        animate={{
+          opacity: 1,
+          translateX: 0
+        }}
+        transition={{
+          type: 'spring',
+        }}
+      >
         {event.titulo}
       </Title>
-      <Text>{event.descricao}</Text>
+      <Text
+        from={{
+          opacity: 0,
+          translateY: 100
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        transition={{
+          type: 'spring',
+        }}
+      >
+        {event.descricao}
+      </Text>
 
-      <OrganizerContainer>
+      <OrganizerContainer
+        from={{
+          opacity: 0,
+          translateX: -80
+        }}
+        animate={{
+          opacity: 1,
+          translateX: 0
+        }}
+        transition={{
+          type: 'spring',
+        }}
+      >
         <Organizer>Organizado por:  </Organizer>
         <Organizer isBold>{event.organizador}</Organizer>
       </OrganizerContainer>
 
-      <EventTitle>Link do Evento</EventTitle>
+      <MotiView
+        style={{ width: '100%' }}
+        from={{
+          opacity: 0,
+          scale: 0.5
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1
+        }}
+        transition={{
+          type: 'spring',
+        }}
+      >
+        <EventTitle>Link do Evento</EventTitle>
 
-      <EventLink event={event} isTimeUp={timerData.isTimeUp} />
+        <EventLink event={event} isTimeUp={timerData.isTimeUp} />
+      </MotiView>
 
       <EventCountdown timerData={timerData} />
     </Container>

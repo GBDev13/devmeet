@@ -1,6 +1,7 @@
 import { RectButton } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
+import { MotiView } from "moti";
 
 interface BaseSelectedProps {
   isSelected: boolean;
@@ -14,14 +15,18 @@ interface ContainerProps extends BaseSelectedProps {
   hasSelected: boolean;
 }
 
-export const Container = styled(RectButton)<ContainerProps>`
-  background: ${({ theme }) => theme.colors.white};
+export const MotiContainer = styled(MotiView)`
+  width: 100%;
   padding: 15px;
-  border-radius: 9px;
   min-height: 155px;
-  width: 48%;
   justify-content: space-between;
+`;
+
+export const Container = styled(RectButton)<ContainerProps>`
+  width: 48%;
   margin-top: 15px;
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: 9px;
 
   ${({ hasSelected }) =>
     hasSelected &&

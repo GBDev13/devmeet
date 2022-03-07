@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { EventTypeButton, IEventType } from '../../components/EventTypeButton';
 import { Title } from '../Home/styles';
-import { ButtonsContainer, Container, NextContainer, NextText, Text } from './styles';
+import { ButtonsContainer, Container, NextContainer, NextMotiContent, NextText, Text } from './styles';
 import { Button } from '../../components/Button';
 import Arrow from '../../assets/arrow.svg';
 import { useTheme } from 'styled-components/native';
@@ -10,6 +10,7 @@ import { api } from '../../services/api';
 import { useToast } from "react-native-toast-notifications";
 import SkeletonContent from 'react-native-skeleton-content';
 import { lighten } from 'polished';
+import { AnimatePresence } from 'moti';
 
 interface NavigationProps{
   navigate:(
@@ -59,10 +60,38 @@ export function EventTypes() {
 
   return (
     <Container>
-      <Title>
+      <Title
+        from={{
+          opacity: 0,
+          translateY: -80
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        transition={{
+          type: 'timing',
+          duration: 800,
+        }}
+      >
         Que tipo de evento você procura?
       </Title>
-      <Text>Selecione a categoria que mais te agrada!</Text>
+      <Text
+        from={{
+          opacity: 0,
+          translateX: -80
+        }}
+        animate={{
+          opacity: 1,
+          translateX: 0
+        }}
+        transition={{
+          type: 'timing',
+          duration: 1000,
+        }}
+      >
+        Selecione a categoria que mais te agrada!
+      </Text>
 
       {isLoading ? (
         <SkeletonContent
@@ -99,8 +128,26 @@ export function EventTypes() {
       )}
 
       <NextContainer>
+        <AnimatePresence>
           {selectedType !== null && (
-            <>
+            <NextMotiContent
+              from={{
+                opacity: 0,
+                translateX: -40
+              }}
+              exit={{
+                opacity: 0,
+                translateX: -40
+              }}
+              animate={{
+                opacity: 1,
+                translateX: 0
+              }}
+              transition={{
+                type: 'timing',
+                duration: 500,
+              }}
+            >
               <NextText>Próximo</NextText>
               <Button
                 onPress={() => navigation.navigate("Home", { typeId: selectedType?.id })}
@@ -110,8 +157,9 @@ export function EventTypes() {
               >
                 <Arrow width={20} />
               </Button>
-            </>
+            </NextMotiContent>
           )}
+        </AnimatePresence>
       </NextContainer>
     </Container>
   )

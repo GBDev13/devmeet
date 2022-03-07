@@ -2,6 +2,7 @@ import styled, { css } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { FlatList } from "react-native";
 import { IEvent } from "../../components/EventCard";
+import { MotiView, MotiText } from "moti";
 
 export const Container = styled.View`
   flex: 1;
@@ -12,13 +13,13 @@ export const Container = styled.View`
   padding-top: 62px;
 `;
 
-export const Header = styled.View`
+export const Header = styled(MotiView)`
   width: 100%;
   justify-content: space-between;
   flex-direction: row;
 `;
 
-export const Title = styled.Text`
+export const Title = styled(MotiText)`
   ${({ theme }) => css`
     font-family: ${theme.fonts.primary.bold};
     color: ${theme.colors.white};
@@ -27,7 +28,7 @@ export const Title = styled.Text`
   `}
 `;
 
-export const Text = styled.Text`
+export const Text = styled(MotiText)`
   text-align: left;
   width: 100%;
   margin-top: 30px;

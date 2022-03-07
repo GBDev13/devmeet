@@ -1,3 +1,4 @@
+import { MotiView } from "moti";
 import { RectButton } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
@@ -19,7 +20,7 @@ export const Container = styled(RectButton)`
   margin: 16px 0;
 `;
 
-export const DateContainer = styled.View`
+export const DateContainer = styled(MotiView)`
   width: 100%;
   flex-direction: row;
 `;
@@ -54,7 +55,7 @@ export const ShortDescription = styled.Text`
   `}
 `;
 
-export const CardFooter = styled.View`
+export const CardFooter = styled(MotiView)`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;

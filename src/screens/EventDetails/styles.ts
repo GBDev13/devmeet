@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { MotiText, MotiView } from "moti";
 
 interface TextProps {
   isBold?: boolean;
@@ -10,7 +11,7 @@ export const Container = styled.ScrollView`
   background: ${({ theme }) => theme.colors.background};
 `;
 
-export const Header = styled.View`
+export const Header = styled(MotiView)`
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -18,7 +19,7 @@ export const Header = styled.View`
   margin-bottom: 32px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled(MotiText)`
   width: 100%;
   text-align: left;
   ${({ theme }) => css`
@@ -29,7 +30,7 @@ export const Title = styled.Text`
   `}
 `;
 
-export const Text = styled.Text`
+export const Text = styled(MotiText)`
   text-align: left;
   width: 100%;
   margin: 35px 0;
@@ -54,7 +55,7 @@ export const DateText = styled.Text<TextProps>`
   `};
 `;
 
-export const OrganizerContainer = styled.View<TextProps>`
+export const OrganizerContainer = styled(MotiView)<TextProps>`
   flex-direction: row;
   align-self: flex-start;
   margin-bottom: 30px;

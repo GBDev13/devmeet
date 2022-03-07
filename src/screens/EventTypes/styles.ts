@@ -1,3 +1,4 @@
+import { MotiText, MotiView } from "moti";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 
@@ -10,7 +11,7 @@ export const Container = styled.View`
   padding-top: 62px;
 `;
 
-export const Text = styled.Text`
+export const Text = styled(MotiText)`
   text-align: left;
   width: 100%;
   margin-top: 30px;
@@ -37,11 +38,15 @@ export const ButtonsContainer = styled.ScrollView.attrs({
 `;
 
 export const NextContainer = styled.View`
+  margin-top: 32px;
+  width: 100%;
+  height: 40px;
+`;
+
+export const NextMotiContent = styled(MotiView)`
   flex-direction: row;
   align-items: center;
   align-self: flex-end;
-  margin-top: 32px;
-  height: 40px;
 `;
 
 export const NextText = styled.Text`

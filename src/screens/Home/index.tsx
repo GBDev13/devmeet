@@ -55,7 +55,20 @@ export function Home() {
 
   return (
     <Container>
-      <Header>
+      <Header
+        from={{
+          opacity: 0,
+          translateY: -80
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        transition={{
+          type: 'timing',
+          duration: 800,
+        }}
+      >
         <Title>
           Eventos{'\n'}disponíveis
         </Title>
@@ -63,7 +76,22 @@ export function Home() {
         <BackButton />
       </Header>
 
-      <Text>Selecione o evento desejado.{'\n'}E espere sua data!</Text>
+      <Text
+        from={{
+          opacity: 0,
+          translateY: 50
+        }}
+        animate={{
+          opacity: 1,
+          translateY: 0
+        }}
+        transition={{
+          type: 'timing',
+          duration: 1000,
+        }}
+      >
+        Selecione o evento desejado.{'\n'}E espere sua data!
+      </Text>
       
       {isLoading ? (
         <SkeletonContent

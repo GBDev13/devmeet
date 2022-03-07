@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Pattern } from "./styles";
+import { Container, LogoContainer, Pattern, PatternContainer } from "./styles";
 import Logo from '../../assets/logo.svg';
 import { useNavigation } from '@react-navigation/native';
 
@@ -9,7 +9,7 @@ export function Splash() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigation.navigate("Welcome");
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(timeout);
@@ -18,8 +18,40 @@ export function Splash() {
 
   return (
     <Container>
-      <Pattern />
-      <Logo />
+      <PatternContainer
+        from={{
+          opacity: 0.5,
+          scale: 1.05
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1
+        }}
+        transition={{
+          loop: true,
+          type: 'timing',
+          duration: 1000,
+          delay: 100,
+        }}
+      >
+        <Pattern />
+      </PatternContainer>
+      <LogoContainer
+        from={{
+          scale: 0.75,
+          opacity: 0
+        }}
+        animate={{
+          scale: 1,
+          opacity: 1
+        }}
+        transition={{
+          type: 'spring',
+          duration: 800,
+        }}
+      >
+        <Logo />
+      </LogoContainer>
     </Container>
   )
 }

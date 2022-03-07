@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { MotiView } from "moti";
 
-export const Container = styled.View`
+export const Container = styled(MotiView)`
   width: 100%;
   margin-top: 60px;
 `;
@@ -45,7 +46,7 @@ export const TimeLabel = styled.Text`
   `}
 `;
 
-export const StartedEventContainer = styled.View`
+export const StartedEventContainer = styled(MotiView)`
   width: 100%;
   background: ${({ theme }) => theme.colors.shape};
   padding: 10px 15px;
