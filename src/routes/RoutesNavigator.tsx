@@ -20,6 +20,9 @@ export function RoutesNavigator() {
       <Screen
         name="Welcome"
         component={Welcome}
+        options={{
+          gestureEnabled: false,
+        }}
       />
       <Screen
         name="EventTypes"

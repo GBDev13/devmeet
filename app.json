@@ -1,8 +1,7 @@
 {
   "expo": {
-    "title": "Dev Meet",
     "description": "Aplicativo desenvolvido durante o desafio da semana React Native da comunidade Ballerini",
-    "name": "devmeet",
+    "name": "Dev Meet",
     "slug": "devmeet",
     "scheme": "devmeet",
     "version": "1.0.0",

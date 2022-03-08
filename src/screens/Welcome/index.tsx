@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTheme } from 'styled-components/native';
 import Person from '../../assets/person.svg';
 import { Button } from '../../components/Button';
@@ -10,16 +10,25 @@ import {
   TextHighlight
 } from "./styles";
 import Arrow from '../../assets/arrow.svg';
-import { useNavigation } from '@react-navigation/native';
 import { MotiView } from 'moti';
 
-export function Welcome() {
+interface Props {
+  navigation: any;
+}
+
+export function Welcome({ navigation }: Props) {
   const { colors } = useTheme();
-  const navigation = useNavigation<any>();
 
   function handleNext() {
     navigation.navigate("EventTypes");
   }
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e: any) => {
+      e.preventDefault();
+      return;
+    })
+  },[navigation]);
 
   return (
     <Container>

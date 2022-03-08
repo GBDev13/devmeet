@@ -20,7 +20,7 @@ interface Props {
   isTimeUp: boolean;
 }
 
-const fakeData = new Date('2022-03-06T08:53:16.020Z');
+const fakeData = new Date('2022-03-07T03:50:30.846Z');
 
 export function EventLink({ event, isTimeUp }: Props) {
   const { colors } = useTheme();

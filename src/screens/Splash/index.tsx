@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Container, LogoContainer, Pattern, PatternContainer } from "./styles";
 import Logo from '../../assets/logo.svg';
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
+import logoAnim from '../../assets/animations/logo.json';
 
 export function Splash() {
   const navigation = useNavigation<any>();
@@ -9,7 +11,7 @@ export function Splash() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigation.navigate("Welcome");
-    }, 1500);
+    }, 2000);
 
     return () => {
       clearTimeout(timeout);
@@ -36,7 +38,14 @@ export function Splash() {
       >
         <Pattern />
       </PatternContainer>
-      <LogoContainer
+      <LottieView
+        source={logoAnim}
+        style={{ width: 300, height: 150 }}
+        resizeMode="contain"
+        autoPlay
+        loop={false}
+      />
+      {/* <LogoContainer
         from={{
           scale: 0.75,
           opacity: 0
@@ -50,8 +59,8 @@ export function Splash() {
           duration: 800,
         }}
       >
-        <Logo />
-      </LogoContainer>
+        
+      </LogoContainer> */}
     </Container>
   )
 }
