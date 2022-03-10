@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function EventCountdown({ timerData }: Props) {
-  const { days, hours, minutes, percentage, isTimeUp } = timerData;
+  const { days, hours, minutes, percentage, seconds, isTimeUp } = timerData;
 
   const animation = {
     from:{
@@ -28,6 +28,8 @@ export function EventCountdown({ timerData }: Props) {
     }
   };
 
+  const numberDays = Number(days);
+
   return (
     <Container {...animation}>
       <AnimatePresence>
@@ -40,10 +42,12 @@ export function EventCountdown({ timerData }: Props) {
           <MotiView {...animation}>
             <Text>Tempo até o evento</Text>
             <TimeContainer>
-              <TimeItem>
-                <TimeText>{days}</TimeText>
-                <TimeLabel>DAY(s)</TimeLabel>
-              </TimeItem>
+              {numberDays >= 1 && (
+                <TimeItem {...animation}>
+                  <TimeText>{days}</TimeText>
+                  <TimeLabel>DAY(s)</TimeLabel>
+                </TimeItem>
+              )}
 
               <TimeItem>
                 <TimeText>{hours}</TimeText>
@@ -54,6 +58,13 @@ export function EventCountdown({ timerData }: Props) {
                 <TimeText>{minutes}</TimeText>
                 <TimeLabel>MIN(s)</TimeLabel>
               </TimeItem>
+
+              {numberDays <= 0 && (
+                <TimeItem {...animation}>
+                  <TimeText>{seconds}</TimeText>
+                  <TimeLabel>SEC(s)</TimeLabel>
+                </TimeItem>
+              )}
             </TimeContainer>
 
             <ProgressContainer>

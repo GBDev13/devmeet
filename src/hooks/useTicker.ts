@@ -10,6 +10,7 @@ export interface UseTickerReturn {
   days: string;
   hours: string;
   minutes: string;
+  seconds: string;
   isTimeUp: boolean;
   percentage: number;
 }
@@ -42,12 +43,13 @@ export const useTicker = ({
       days: "00",
       hours: "00",
       minutes: "00",
+      seconds: "00",
       percentage: 100,
       isTimeUp,
     };
   }
 
-  let { days, hours, minutes } = intervalToDuration({
+  let { days, hours, minutes, seconds } = intervalToDuration({
     start: now,
     end: finalDate,
   });
@@ -61,6 +63,7 @@ export const useTicker = ({
     days: formatNumber(days),
     hours: formatNumber(hours),
     minutes: formatNumber(minutes),
+    seconds: formatNumber(seconds),
     isTimeUp,
     percentage,
   };

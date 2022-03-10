@@ -18,7 +18,7 @@ export function EventDetails() {
 
   const route = useRoute();
   const { event } = route.params as Params;
-  // const finalDate = new Date("2022-03-07T04:09:22.000Z"); // quando o evento começa
+  // const finalDate = new Date('2022-03-11T02:24:00.391Z'); // quando o evento começa
   // const startDate = new Date("2022-03-02T23:00:00.000Z"); // data de publicaçao
 
   const timerData = useTicker({

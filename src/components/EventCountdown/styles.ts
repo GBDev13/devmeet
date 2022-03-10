@@ -23,7 +23,7 @@ export const TimeContainer = styled.View`
   justify-content: space-between;
 `;
 
-export const TimeItem = styled.View`
+export const TimeItem = styled(MotiView)`
   flex-direction: row;
   align-items: center;
 `;
