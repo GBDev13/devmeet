@@ -21,10 +21,6 @@ interface Props {
   isEnded: boolean;
 }
 
-const now = new Date();
-now.setMinutes(now.getMinutes() + 1);
-const fakeData = now;
-
 export function EventLink({ event, isTimeUp, isEnded }: Props) {
   const { colors } = useTheme();
   const toast = useToast();
@@ -69,6 +65,11 @@ export function EventLink({ event, isTimeUp, isEnded }: Props) {
       setIsLoading(true);
       if(!notify) {
         if(isEnded) return;
+        
+        // const now = new Date();
+        // now.setMinutes(now.getMinutes() + 1);
+        // const fakeData = now;
+
         const notifyId = await Notifications.scheduleNotificationAsync({
           content: {
             title: 'Dev Meet iniciando 🚀',
@@ -76,8 +77,8 @@ export function EventLink({ event, isTimeUp, isEnded }: Props) {
             data: { event },
           },
           trigger: {
-            // date: new Date(event.dataInicio)
-            date: fakeData
+            date: new Date(event.dataInicio)
+            // date: fakeData
           },
         });
         
@@ -103,7 +104,10 @@ export function EventLink({ event, isTimeUp, isEnded }: Props) {
       }
       setHasNotify(old => !old);
     } catch (err) {
-      console.log(err)
+      toast.show("Ocorreu um erro ao alterar as notificações", {
+        type: "danger",
+        duration: 5000,
+      });
     } finally {
       setIsLoading(false);
     }
