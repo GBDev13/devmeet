@@ -16,6 +16,10 @@
     "notification": {
       "color": "#FF5100",
       "icon": "./assets/logoNotify.png"
+    },
+    "android": {
+      "package": "com.gbdev.devmeet",
+      "versionCode": 1
     }
   }
 }

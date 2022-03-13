@@ -31,7 +31,6 @@ export const ButtonsContainer = styled.ScrollView.attrs({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingBottom: 80,
   },
 })`
   flex: 1;

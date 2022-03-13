@@ -2,6 +2,10 @@ import styled, { css } from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { MotiView } from "moti";
 
+interface StartedProps {
+  borderColor?: string;
+}
+
 export const Container = styled(MotiView)`
   width: 100%;
   margin-top: 60px;
@@ -46,13 +50,14 @@ export const TimeLabel = styled.Text`
   `}
 `;
 
-export const StartedEventContainer = styled(MotiView)`
+export const StartedEventContainer = styled(MotiView)<StartedProps>`
   width: 100%;
   background: ${({ theme }) => theme.colors.shape};
   padding: 10px 15px;
   border-radius: 9px;
   border-bottom-width: 8px;
-  border-bottom-color: ${({ theme }) => theme.colors.success};
+  border-bottom-color: ${({ theme, borderColor }) =>
+    borderColor ?? theme.colors.success};
 `;
 
 export const StartedText = styled.Text`

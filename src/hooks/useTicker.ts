@@ -4,6 +4,7 @@ import { intervalToDuration, isBefore } from "date-fns";
 interface UseTickerProps {
   startDate: Date;
   finalDate: Date;
+  endDate: Date;
 }
 
 export interface UseTickerReturn {
@@ -12,6 +13,7 @@ export interface UseTickerReturn {
   minutes: string;
   seconds: string;
   isTimeUp: boolean;
+  isEnded: boolean;
   percentage: number;
 }
 
@@ -23,6 +25,7 @@ function formatNumber(number: number | undefined) {
 export const useTicker = ({
   startDate,
   finalDate,
+  endDate,
 }: UseTickerProps): UseTickerReturn => {
   const [now, setNow] = useState(new Date());
 
@@ -37,8 +40,9 @@ export const useTicker = ({
   }, [finalDate]);
 
   const isTimeUp = isBefore(finalDate, now);
+  const isEnded = isBefore(endDate, now);
 
-  if (isTimeUp) {
+  if (isTimeUp || isEnded) {
     return {
       days: "00",
       hours: "00",
@@ -46,6 +50,7 @@ export const useTicker = ({
       seconds: "00",
       percentage: 100,
       isTimeUp,
+      isEnded,
     };
   }
 
@@ -65,6 +70,7 @@ export const useTicker = ({
     minutes: formatNumber(minutes),
     seconds: formatNumber(seconds),
     isTimeUp,
+    isEnded,
     percentage,
   };
 };

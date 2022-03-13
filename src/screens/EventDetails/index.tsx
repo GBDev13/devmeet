@@ -23,7 +23,8 @@ export function EventDetails() {
 
   const timerData = useTicker({
     startDate: new Date(event.dataPublicacao),
-    finalDate: new Date(event.dataInicio)
+    finalDate: new Date(event.dataInicio),
+    endDate: new Date(event.dataFinalizacao)
     // startDate,
     // finalDate
   });
@@ -130,7 +131,7 @@ export function EventDetails() {
       >
         <EventTitle>Link do Evento</EventTitle>
 
-        <EventLink event={event} isTimeUp={timerData.isTimeUp} />
+        <EventLink event={event} isTimeUp={timerData.isTimeUp} isEnded={timerData.isEnded} />
       </MotiView>
 
       <EventCountdown timerData={timerData} />

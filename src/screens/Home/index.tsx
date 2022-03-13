@@ -37,8 +37,12 @@ export function Home() {
     try {
       setIsLoading(true);
       const { data } = await api.get(`/events?tipoId=${typeId}`);
-      
-      setEvents(data);
+
+      const formatted= data.sort((a: IEvent, b: IEvent) => {
+        return new Date(a.dataInicio) > new Date(b.dataInicio);
+      });
+    
+      setEvents(formatted);
     } catch (err) {
       toast.show("Ocorreu um erro ao buscar a lista de eventos, tente novamente mais tarde!", {
         type: "danger",

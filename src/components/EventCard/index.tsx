@@ -11,6 +11,7 @@ export interface IEvent {
   tipoId: number;
   dataInicio: string;
   dataPublicacao: string;
+  dataFinalizacao: string;
   descricao: string;
   link: string;
   organizador: string;
@@ -23,9 +24,10 @@ type Props = RectButtonProps & {
 
 export function EventCard({ event, ...rest }: Props) {
   const { colors } = useTheme();
-
+  
   const formattedDate = formatDate(new Date(event.dataInicio), 'dd/MMM');
   const formattedHour = formatDate(new Date(event.dataInicio), 'HH:mm');
+  const formattedHourFinal = formatDate(new Date(event.dataFinalizacao), 'HH:mm');
 
   return (
     <Container {...rest}>
@@ -45,7 +47,7 @@ export function EventCard({ event, ...rest }: Props) {
       >
         <DateText>{formattedDate}</DateText>
         <DateText style={{ marginHorizontal: 5 }} color={colors.background}>-</DateText>
-        <DateText fontWeight="light">{formattedHour}</DateText>
+        <DateText fontWeight="light">{formattedHour} - {formattedHourFinal}</DateText>
       </DateContainer>
 
       <MotiView

@@ -18,11 +18,14 @@ import { isBefore } from 'date-fns';
 interface Props {
   event: IEvent;
   isTimeUp: boolean;
+  isEnded: boolean;
 }
 
-const fakeData = new Date('2022-03-07T03:50:30.846Z');
+const now = new Date();
+now.setMinutes(now.getMinutes() + 1);
+const fakeData = now;
 
-export function EventLink({ event, isTimeUp }: Props) {
+export function EventLink({ event, isTimeUp, isEnded }: Props) {
   const { colors } = useTheme();
   const toast = useToast();
 
@@ -65,6 +68,7 @@ export function EventLink({ event, isTimeUp }: Props) {
     try {
       setIsLoading(true);
       if(!notify) {
+        if(isEnded) return;
         const notifyId = await Notifications.scheduleNotificationAsync({
           content: {
             title: 'Dev Meet iniciando 🚀',
@@ -72,8 +76,8 @@ export function EventLink({ event, isTimeUp }: Props) {
             data: { event },
           },
           trigger: {
-            date: new Date(event.dataInicio)
-            // date: fakeData
+            // date: new Date(event.dataInicio)
+            date: fakeData
           },
         });
         
@@ -106,6 +110,7 @@ export function EventLink({ event, isTimeUp }: Props) {
   }
 
   function handleSetLink() {
+    if(isEnded) return;
     Clipboard.setString(event.link)
     toast.show("Link copiado para sua área de transferência!", {
       type: "success",
@@ -118,22 +123,26 @@ export function EventLink({ event, isTimeUp }: Props) {
       <LinkText>{event.link}</LinkText>
 
       <ButtonsContainer>
-        <Button
-          onPress={handleNotify}
-          bgColor={hasNotify ? rgba(colors.error, 0.2) : rgba(colors.white, 0.2)}
-          size="24px"
-          radius="6px"
-        >
-          {hasNotify ? <NotifyOff /> : <NotifyIcon />}
-        </Button>
-        <Button
-          onPress={handleSetLink}
-          bgColor={isTimeUp ? colors.success : rgba(colors.success, 0.2)}
-          size="24px"
-          radius="6px"
-        >
-          {isTimeUp ? <ArrowWhite /> : <ArrowSuccess />}
-        </Button>
+        {!isTimeUp && !isEnded && (
+          <Button
+            onPress={handleNotify}
+            bgColor={hasNotify ? rgba(colors.error, 0.2) : rgba(colors.white, 0.2)}
+            size="24px"
+            radius="6px"
+          >
+            {hasNotify ? <NotifyOff /> : <NotifyIcon />}
+          </Button>
+        )}
+        {!isEnded && (
+          <Button
+            onPress={handleSetLink}
+            bgColor={isTimeUp && !isEnded ? colors.success : rgba(colors.success, 0.2)}
+            size="24px"
+            radius="6px"
+          >
+            {isTimeUp && !isEnded ? <ArrowWhite /> : <ArrowSuccess />}
+          </Button>
+        )}
       </ButtonsContainer>
     </Container>
   )

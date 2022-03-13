@@ -2,13 +2,14 @@ import React from 'react';
 import { UseTickerReturn } from '../../hooks/useTicker';
 import { Container, ProgressContainer, ProgressContent, StartedEventContainer, StartedText, Text, TimeContainer, TimeItem, TimeLabel, TimeText } from './styles';
 import { AnimatePresence, MotiView } from 'moti';
+import { useTheme } from 'styled-components/native';
 
 interface Props {
   timerData: UseTickerReturn;
 }
 
 export function EventCountdown({ timerData }: Props) {
-  const { days, hours, minutes, percentage, seconds, isTimeUp } = timerData;
+  const { days, hours, minutes, percentage, seconds, isTimeUp, isEnded } = timerData;
 
   const animation = {
     from:{
@@ -30,10 +31,17 @@ export function EventCountdown({ timerData }: Props) {
 
   const numberDays = Number(days);
 
+  const { colors } = useTheme();
+
   return (
     <Container {...animation}>
       <AnimatePresence>
-        {isTimeUp && (
+        {isEnded && (
+          <StartedEventContainer borderColor={colors.error} {...animation}>
+            <StartedText>O Evento já foi finalizado 😢</StartedText>
+          </StartedEventContainer>
+        )}
+        {isTimeUp && !isEnded && (
           <StartedEventContainer {...animation}>
             <StartedText>O Evento já está rolando! 🎉</StartedText>
           </StartedEventContainer>
